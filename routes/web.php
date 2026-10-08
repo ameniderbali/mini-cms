@@ -14,7 +14,7 @@ Route::get('/bonjour-court', fn () => 'Même résultat, écrit avec une fonction
 
 Route::get('/bienvenue', function () {
     return view('bienvenue', [
-        'etudiant' => 'Prenom Nom',
+        'etudiant' => 'Derbali Ameni',
         'groupe' => 'MDW32',
         'cours' => 'Atelier Framework Côté Serveur',
     ]);
@@ -31,7 +31,7 @@ Route::get('/heure', function () {
 });
 Route::get('/a-propos', function () {
     return view('a-propos', [
-        'auteur' => 'Prenom Nom',
+        'auteur' => 'Derbali Ameni',
         'groupe' => 'MDW32',
     ]);
 });
