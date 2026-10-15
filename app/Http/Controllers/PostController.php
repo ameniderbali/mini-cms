@@ -10,33 +10,58 @@ class PostController extends Controller
             'decouvrir-laravel-13' => [
                 'slug' => 'decouvrir-laravel-13',
                 'title' => 'Découvrir Laravel 13',
+                'excerpt' => 'Découvrez les bases de Laravel et la structure de son projet.',
+                'author' => 'Ameni Derbali',
+                'date' => '15/10/2026',
                 'year' => 2026,
                 'featured' => true,
-                'body' => 'Laravel 13 simplifie la structure du projet : la configuration des middlewares et des exceptions se fait dans bootstrap/app.php.',
+                'body' => [
+                    'Laravel est un framework PHP qui facilite le développement d’applications web.',
+                    'Il propose un système de routage, des contrôleurs et le moteur de templates Blade.',
+                    'L’architecture MVC permet de séparer les données, le traitement et la présentation.',
+                ],
             ],
 
             'routes-et-controleurs' => [
                 'slug' => 'routes-et-controleurs',
                 'title' => 'Routes et contrôleurs',
+                'excerpt' => 'Comprenez comment Laravel traite les requêtes HTTP.',
+                'author' => 'Ameni Derbali',
+                'date' => '14/10/2026',
                 'year' => 2026,
                 'featured' => false,
-                'body' => 'Une route associe une URL à une méthode de contrôleur. Le contrôleur prépare les données, la vue les affiche.',
+                'body' => [
+                    'Une route associe une URL à une action de l’application.',
+                    'Le contrôleur reçoit la requête, prépare les données et retourne une réponse.',
+                ],
             ],
 
             'premiers-pas-avec-blade' => [
-    'slug' => 'premiers-pas-avec-blade',
-    'title' => 'Premiers pas avec Blade',
-    'year' => 2026,
-    'featured' => false,
-    'body' => 'Blade est le moteur de vues de Laravel. Les doubles accolades échappent toujours le contenu affiché.',
-],
+                'slug' => 'premiers-pas-avec-blade',
+                'title' => 'Premiers pas avec Blade',
+                'excerpt' => 'Apprenez à créer des vues réutilisables avec Blade.',
+                'author' => 'Ameni Derbali',
+                'date' => '13/10/2026',
+                'year' => 2026,
+                'featured' => false,
+                'body' => [
+                    'Blade est le moteur de templates intégré à Laravel.',
+                    'Les doubles accolades permettent d’afficher des données tout en échappant le contenu HTML.',
+                ],
+            ],
 
             'architecture-mvc' => [
                 'slug' => 'architecture-mvc',
                 'title' => 'Comprendre l’architecture MVC',
+                'excerpt' => 'Découvrez le rôle du modèle, de la vue et du contrôleur.',
+                'author' => 'Ameni Derbali',
+                'date' => '12/10/2026',
                 'year' => 2026,
                 'featured' => false,
-                'body' => 'Le modèle MVC sépare les données, le traitement et la présentation.',
+                'body' => [
+                    'MVC signifie Model-View-Controller.',
+                    'Le modèle représente les données, la vue gère la présentation et le contrôleur coordonne le traitement.',
+                ],
             ],
         ];
     }

@@ -3,12 +3,13 @@
 <article class="bg-white rounded-lg border border-gray-200 shadow-sm p-5 flex flex-col gap-3">
     <div class="flex items-center gap-2">
         <h2 class="text-lg font-semibold text-gray-900">
-            <a href="{{ route('posts.show', $post['slug']) }}" class="hover:text-indigo-600">
+            <a href="{{ route('posts.show', $post['slug']) }}"
+               class="hover:text-indigo-600">
                 {{ $post['title'] }}
             </a>
         </h2>
 
-        @if ($post['featured'] ?? false)
+        @if ($post['featured'])
             <span class="text-xs font-medium bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">
                 À la une
             </span>
@@ -16,12 +17,12 @@
     </div>
 
     <p class="text-sm text-gray-600">
-        {{ $post['body'] }}
+        {{ $post['excerpt'] }}
     </p>
 
     <p class="text-xs text-gray-500">
-        Année : {{ $post['year'] }} -
-        <a href="{{ route('posts.archive', $post['year']) }}" class="underline hover:text-indigo-600">
+        {{ $post['author'] }} - {{ $post['date'] }} -
+        <a href="{{ route('posts.archive', $post['year']) }}" class="underline">
             Archive {{ $post['year'] }}
         </a>
     </p>
