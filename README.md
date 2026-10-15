@@ -1,18 +1,25 @@
 # Mini-CMS
 
-Projet fil rouge de l'Atelier Framework Côté Serveur (Laravel 13, PHP 8.3+), 3e année MDW, ISET Sidi Bouzid.
+Projet fil rouge de l’Atelier Framework Côté Serveur — Laravel 13, 3e année Licence Développement Web et Multimédia, ISET Sidi Bouzid.
 
-Auteur : Derbali Ameni, groupe MDW32.
+**Auteur :** Derbali Ameni  
+**Groupe :** MDW32
 
-Mini-CMS évoluera au fil du semestre vers une petite plateforme de publication : pages publiques, back-office authentifié, API JSON et tests Pest. Chaque session se termine par un tag Git (`lab-01`, `lab-01b`, puis un tag par session).
+## Présentation
 
+Mini-CMS est une petite application de publication développée progressivement avec Laravel. Le projet permet de découvrir le routage, les contrôleurs, les vues Blade et les composants réutilisables.
 
-## État actuel (tag lab-02)
+Les articles sont actuellement stockés dans un tableau PHP. Aucune base de données n’est nécessaire pour afficher les pages et les articles dans cette version.
 
-- Routes nommées, toutes servies par des contrôleurs : `PageController` (pages) et `PostController` (articles).
-- Articles stockés dans un tableau PHP, sans base de données pour l'instant.
-- Layout Blade `<x-layout>` avec Tailwind chargé par Vite.
-- Base de données SQLite locale (`database/database.sqlite`, non versionnée).
+## État actuel — lab-02
+
+- Routes nommées et contrôleurs `PageController` et `PostController`.
+- Pages publiques : accueil, à propos et heure.
+- Liste, détail et archives des articles.
+- Vues Blade avec un layout réutilisable `<x-layout>`.
+- Composants Blade, dont les cartes d’articles et les alertes.
+- Tailwind CSS compilé avec Vite.
+- Base de données SQLite locale pour les prochaines évolutions.
 
 ## Routes disponibles
 
@@ -25,68 +32,114 @@ Mini-CMS évoluera au fil du semestre vers une petite plateforme de publication 
 | GET | `/posts/archive/{year}` | `posts.archive` | `PostController@archive` |
 | GET | `/posts/{slug}` | `posts.show` | `PostController@show` |
 
-## Routes disponibles
-
-| Méthode | URI              | Réponse                                                                |
-| ------- | ---------------- | ---------------------------------------------------------------------- |
-| GET     | `/`              | Vue `welcome` (page d'accueil par défaut de Laravel)                   |
-| GET     | `/bonjour`       | Chaîne de texte « Bonjour MDW3 ! Voici ma première route Laravel 13. » |
-| GET     | `/bonjour-court` | Chaîne de texte, écrite avec une fonction fléchée                      |
-| GET     | `/bienvenue`     | Vue `bienvenue` avec le nom de l'étudiant, le groupe et le cours       |
-| GET     | `/version`       | Chaîne avec la version de Laravel et celle de PHP                      |
-| GET     | `/heure`         | Vue `heure` avec l'heure et la date                                    |
-| GET     | `/a-propos`      | Vue `a-propos` avec le nom de l'auteur et le groupe                    |
-
+La route de détail utilise un slug. Un article inexistant doit retourner une erreur HTTP 404.
 
 ## Prérequis
 
-* PHP et Composer (PHP 8.3 ou plus depuis https://www.php.net/downloads, avec les extensions curl, fileinfo, mbstring, openssl, pdo_sqlite, sqlite3 et zip activées dans php.ini, et Composer depuis https://getcomposer.org).
-* Node.js LTS et npm.
-* Git.
+- PHP 8.3 ou supérieur, avec les extensions requises par Laravel.
+- Composer.
+- Node.js LTS et npm.
+- Git.
 
-## Installation
+## Installation sous Windows — PowerShell
 
-### Bash (Git Bash, macOS, Linux)
-
-```bash
-git clone https://github.com/ameniderbali/mini-cms.git
-cd mini-cms
-composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate
-composer run dev
-```
-
-### PowerShell (Windows)
+Cloner le dépôt :
 
 ```powershell
 git clone https://github.com/ameniderbali/mini-cms.git
 cd mini-cms
+```
+
+Installer les dépendances PHP et JavaScript :
+
+```powershell
 composer install
 npm install
+```
+
+Préparer la configuration :
+
+```powershell
 copy .env.example .env
 php artisan key:generate
-New-Item database\database.sqlite -ItemType File
+```
+
+Créer le fichier SQLite s’il n’existe pas :
+
+```powershell
+if (!(Test-Path database\database.sqlite)) {
+    New-Item database\database.sqlite -ItemType File
+}
+```
+
+Vérifier que `.env` contient une configuration SQLite adaptée, notamment :
+
+```dotenv
+DB_CONNECTION=sqlite
+```
+
+Lancer les migrations :
+
+```powershell
 php artisan migrate
+```
+
+Démarrer l’application et Vite :
+
+```powershell
 composer run dev
 ```
 
-Ouvrir ensuite http://localhost:8000 (adresse de l'application, différente de l'adresse de Vite sur le port 5173).
+Ouvrir ensuite [http://localhost:8000](http://localhost:8000).
 
-## Captures d'écran
+## Installation sous Bash — Git Bash, macOS ou Linux
+
+```bash
+git clone https://github.com/ameniderbali/mini-cms.git
+cd mini-cms
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
+
+touch database/database.sqlite
+php artisan migrate
+
+composer run dev
+```
+
+Vérifier également que `.env` utilise SQLite avec `DB_CONNECTION=sqlite`.
+
+## Captures d’écran
+
+Place les captures dans un dossier `screenshots/` à la racine du projet, puis utilise les chemins correspondants ci-dessous.
 
 ### Accueil avec le layout
-![alt text](image-1.png)
+
+![Page d’accueil](![alt text](image-6.png))
 
 ### Liste des articles
 
-![alt text](image-2.png)
+![Liste des articles](![alt text](image-7.png))
 
-### Détail d'un article
+### Détail d’un article
 
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
+![Détail d’un article — capture 1](![alt text](image-8.png))
+
+![Détail d’un article — capture 2](![alt text](image-9.png))
+
+![Détail d’un article — capture 3](![alt text](image-10.png))
+
+![Détail d’un article — capture 3](![alt text](image-11.png))
+## Évolutions prévues
+
+- Gestion des articles en base de données.
+- Back-office avec authentification.
+- API JSON.
+- Tests automatisés avec Pest.
+
+## Technologies
+
+PHP · Laravel · Blade · Tailwind CSS · Vite · SQLite · Git
