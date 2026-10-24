@@ -22,11 +22,11 @@ class PostController extends Controller
     {
         return view('posts.index', [
             'heading' => 'Articles de '.$year,
-            'posts' => Post::whereYear('published_at', $year)->latest('id')->paginate(4),
+            'posts' => Post::published()->whereYear('published_at', $year)->latest('id')->paginate(4),
         ]);
     }
 
-        public function create(): View
+    public function create(): View
     {
         return view('posts.create');
     }
@@ -35,6 +35,7 @@ class PostController extends Controller
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:posts,slug'],
             'excerpt' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string', 'min:20'],
             'is_published' => ['nullable', 'boolean'],
@@ -58,7 +59,7 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-        public function update(Request $request, Post $post): RedirectResponse
+    public function update(Request $request, Post $post): RedirectResponse
     {
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -76,7 +77,7 @@ class PostController extends Controller
         return redirect()->route('posts.show', $post);
     }
 
-       public function destroy(Post $post): RedirectResponse
+    public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
 
