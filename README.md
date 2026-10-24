@@ -1,9 +1,9 @@
-## État actuel (tag lab-03)
+## État actuel (tag lab-03b)
 
-- Articles enregistrés dans une base SQLite et lus avec le modèle Eloquent `Post`.
-- Table `posts` créée par une migration : après un clone, `php artisan migrate` la recrée (vide).
-- Liste paginée, détail par liaison modèle-route, formulaire de création avec validation côté serveur.
-- Premiers tests Pest : `php artisan test`.
+- CRUD complet des articles : liste, détail, création, modification, suppression avec confirmation.
+- Colonne `excerpt` ajoutée par une nouvelle migration.
+- Scope `published` utilisé sur l'accueil et l'archive.
+- Tests Pest des lectures (`PostPagesTest`) et des écritures (`PostWriteTest`) : `php artisan test`.
 
 ## Routes disponibles
 
@@ -17,8 +17,7 @@
 | GET | `/posts/create` | `posts.create` | `PostController@create` |
 | POST | `/posts` | `posts.store` | `PostController@store` |
 | GET | `/posts/{post}` | `posts.show` | `PostController@show` |
-### Session 05
-
-![Liste paginée des articles]![alt text](image-12.png)
-
-![Formulaire avec erreurs de validation]![alt text](image-13.png)
+| GET | `/posts/{post}/edit` | `posts.edit` | `PostController@edit` |
+| PUT | `/posts/{post}` | `posts.update` | `PostController@update` |
+| DELETE | `/posts/{post}` | `posts.destroy` | `PostController@destroy` |
+| PATCH | `/posts/{post}/publication` | `posts.publication` | `PostController@togglePublication` |
