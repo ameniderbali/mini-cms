@@ -1,9 +1,13 @@
-## État actuel (tag lab-03b)
+## État actuel (tag lab-04)
 
-- CRUD complet des articles : liste, détail, création, modification, suppression avec confirmation.
-- Colonne `excerpt` ajoutée par une nouvelle migration.
-- Scope `published` utilisé sur l'accueil et l'archive.
-- Tests Pest des lectures (`PostPagesTest`) et des écritures (`PostWriteTest`) : `php artisan test`.
+- Modèles `Category` et `Tag` reliés à `Post` : un article a une catégorie et un auteur (1:N) et plusieurs tags (N:N, table pivot `post_tag`).
+- Fabriques `PostFactory` (état `published()`), `CategoryFactory`, `TagFactory` et seeders pour un jeu de données réaliste.
+- Chargement anticipé avec `with()` ; `Model::preventLazyLoading()` signale tout problème N+1 hors production.
+- Tests Pest : `PostPagesTest`, `PostWriteTest` et `PostRelationsTest`.
+
+## Données de démonstration
+
+Après un clone, reconstruire la base avec `php artisan migrate:fresh --seed`. Attention : cette commande vide la base avant de la remplir.
 
 ## Routes disponibles
 
@@ -21,3 +25,6 @@
 | PUT | `/posts/{post}` | `posts.update` | `PostController@update` |
 | DELETE | `/posts/{post}` | `posts.destroy` | `PostController@destroy` |
 | PATCH | `/posts/{post}/publication` | `posts.publication` | `PostController@togglePublication` |
+### Session 07
+
+![alt text](<Capture d'écran 2026-10-24 145350.png>) ![alt text](<Capture d'écran 2026-10-24 145438.png>) ![alt text](<Capture d'écran 2026-10-24 145518.png>)
