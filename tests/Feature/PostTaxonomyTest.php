@@ -79,6 +79,7 @@ it('returns 404 for an unknown category slug', function () {
     $this->get('/posts/categorie/inconnue')->assertNotFound();
 });
 
+
 it('counts the published posts of each category on the home page', function () {
     $category = Category::factory()->create(['name' => 'Tutoriels']);
     Post::factory(2)->published()->create(['category_id' => $category->id]);
@@ -87,4 +88,49 @@ it('counts the published posts of each category on the home page', function () {
     $this->get(route('home'))
         ->assertOk()
         ->assertSee('Tutoriels (2)');
+});
+it('lists only the published posts of a tag by its slug', function () {
+    $tag = Tag::factory()->create(['name' => 'Laravel', 'slug' => 'laravel']);
+    $otherTag = Tag::factory()->create(['name' => 'Vue', 'slug' => 'vue']);
+
+    Post::factory()->published()->create(['title' => 'Publie avec le tag'])->tags()->attach($tag);
+    Post::factory()->create(['title' => 'Brouillon avec le tag'])->tags()->attach($tag);
+    Post::factory()->published()->create(['title' => 'Publie autre tag'])->tags()->attach($otherTag);
+
+    $this->get('/posts/tag/laravel')
+        ->assertOk()
+        ->assertSee('Publie avec le tag')
+        ->assertDontSee('Brouillon avec le tag')
+        ->assertDontSee('Publie autre tag');
+});
+
+it('lists the published posts of a tag by its slug', function () {
+    $tag = Tag::factory()->create(['name' => 'Astuce', 'slug' => 'astuce']);
+    $published = Post::factory()->published()->create(['title' => 'Astuce publiee']);
+    $draft = Post::factory()->create(['title' => 'Astuce en brouillon']);
+    $published->tags()->attach($tag);
+    $draft->tags()->attach($tag);
+    Post::factory()->published()->create(['title' => 'Sans ce tag']);
+
+    $this->get('/posts/tag/astuce')
+        ->assertOk()
+        ->assertSee('Astuce publiee')
+        ->assertDontSee('Astuce en brouillon')
+        ->assertDontSee('Sans ce tag');
+});
+
+it('returns 404 for an unknown tag slug', function () {
+    $this->get('/posts/tag/inconnu')->assertNotFound();
+});
+
+it('shows only the tags that have published posts on the home page', function () {
+    $popular = Tag::factory()->create(['name' => 'Populaire']);
+    $hidden = Tag::factory()->create(['name' => 'Invisible']);
+    Post::factory(2)->published()->create()->each(fn (Post $post) => $post->tags()->attach($popular));
+    Post::factory()->create()->tags()->attach($hidden);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertSee('Populaire (2)')
+        ->assertDontSee('Invisible');
 });

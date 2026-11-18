@@ -139,4 +139,17 @@ class PostController extends Controller
 
         return redirect()->route('posts.show', $post);
     }
+
+       public function byTag(Tag $tag): View
+    {
+        return view('posts.index', [
+            'heading' => 'Tag : '.$tag->name,
+            'posts' => $tag->posts()
+                ->published()
+                ->with('user', 'category', 'tags')
+                ->latest('posts.published_at')
+                ->paginate(4),
+        ]);
+    }
+
 }

@@ -21,13 +21,18 @@
 
     <p class="text-sm text-gray-600">{{ $post->excerpt ?? Str::limit($post->body, 120) }}</p>
 
-    @if ($post->tags->isNotEmpty())
-        <ul class="flex flex-wrap gap-2" aria-label="Tags de l'article">
-            @foreach ($post->tags as $tag)
-                <li class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">{{ $tag->name }}</li>
-            @endforeach
-        </ul>
-    @endif
+   @if ($post->tags->isNotEmpty())
+    <ul class="flex flex-wrap gap-2" aria-label="Tags de l'article">
+        @foreach ($post->tags as $tag)
+            <li>
+                <a href="{{ route('posts.tag', $tag) }}"
+                   class="rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 hover:bg-indigo-100">
+                    {{ $tag->name }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
+@endif
 
     <p class="text-xs text-gray-500">
         @if ($post->published_at)
