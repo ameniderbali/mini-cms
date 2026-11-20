@@ -1,9 +1,10 @@
-## État actuel (tag lab-04b)
+## État actuel (tag lab-05)
 
-- Formulaires d'article : catégorie (liste déroulante) et tags (cases à cocher, synchronisés avec `sync()`).
-- Pages publiques par catégorie et par tag, liées par slug (`{category:slug}`, `{tag:slug}`).
-- Accueil : catégories et tags populaires comptés avec `withCount`, articles publiés seulement.
-- Tests Pest : `PostPagesTest`, `PostWriteTest`, `PostRelationsTest` et `PostTaxonomyTest`.
+- Validation des articles dans `StorePostRequest` et `UpdatePostRequest` (`$request->validated()`) : plus aucune règle dans le contrôleur.
+- Messages flash après création, modification, suppression et publication, affichés par le layout avec `x-alert`.
+- Middleware `EnsureSiteIsWritable` (alias `writable`) : avec `SITE_READ_ONLY=true` dans `.env`, les requêtes d'écriture reçoivent une erreur 503.
+- Page « Article introuvable » (404) pour un article inexistant, rendue depuis `withExceptions` dans `bootstrap/app.php` ; les autres 404 gardent la page standard.
+- Tests Pest : `PostPagesTest`, `PostWriteTest`, `PostRelationsTest`, `PostTaxonomyTest` et `PostFeedbackTest`.
 
 ## Routes disponibles
 
