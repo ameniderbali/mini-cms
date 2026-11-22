@@ -7,7 +7,7 @@ use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
-    $this->actingAs(User::factory()->create());
+    $this->actingAs(User::factory()->create(['role' => 'admin']));
 });
 
 it('lists posts with their category, author and tags without lazy loading', function () {
