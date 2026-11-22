@@ -3,9 +3,11 @@
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
+    $this->actingAs(User::factory()->create());
 });
 
 function taxonomyPostData(array $overrides = []): array
@@ -79,7 +81,6 @@ it('returns 404 for an unknown category slug', function () {
     $this->get('/posts/categorie/inconnue')->assertNotFound();
 });
 
-
 it('counts the published posts of each category on the home page', function () {
     $category = Category::factory()->create(['name' => 'Tutoriels']);
     Post::factory(2)->published()->create(['category_id' => $category->id]);
@@ -89,6 +90,7 @@ it('counts the published posts of each category on the home page', function () {
         ->assertOk()
         ->assertSee('Tutoriels (2)');
 });
+
 it('lists only the published posts of a tag by its slug', function () {
     $tag = Tag::factory()->create(['name' => 'Laravel', 'slug' => 'laravel']);
     $otherTag = Tag::factory()->create(['name' => 'Vue', 'slug' => 'vue']);

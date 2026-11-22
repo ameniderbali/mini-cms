@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
+    $this->actingAs(User::factory()->create());
 });
 
 it('shows the posts list', function () {
@@ -49,6 +51,7 @@ it('shows the create form', function () {
         ->assertOk()
         ->assertSee('Nouvel article');
 });
+
 it('shows only published posts on the home page', function () {
     Post::create([
         'title' => 'Article visible',

@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Post;
+use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
+    $this->actingAs(User::factory()->create());
 });
 
 function postData(array $overrides = []): array

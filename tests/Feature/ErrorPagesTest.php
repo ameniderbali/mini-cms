@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Category;
+use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
+    $this->actingAs(User::factory()->create());
 });
 
 it('shows the styled 404 page for an unknown URL', function () {
