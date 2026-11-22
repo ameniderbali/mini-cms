@@ -24,3 +24,10 @@
 | PUT | `/posts/{post}` | `posts.update` | `PostController@update` |
 | DELETE | `/posts/{post}` | `posts.destroy` | `PostController@destroy` |
 | PATCH | `/posts/{post}/publication` | `posts.publication` | `PostController@togglePublication` |
+### Session 10
+
+Back-office des catégories et des tags, messages de validation en français, pages 404 et 503 dans le layout du site.
+
+![Formulaire de catégorie envoyé vide, avec les messages de validation en français](![alt text](image-15.png))
+
+![Page 404 du site pour une adresse inconnue](![alt text](image-14.png))
