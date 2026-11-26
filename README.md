@@ -1,10 +1,11 @@
-## État actuel (tag lab-05)
+## État actuel (tag lab-06)
 
-- Validation des articles dans `StorePostRequest` et `UpdatePostRequest` (`$request->validated()`) : plus aucune règle dans le contrôleur.
-- Messages flash après création, modification, suppression et publication, affichés par le layout avec `x-alert`.
-- Middleware `EnsureSiteIsWritable` (alias `writable`) : avec `SITE_READ_ONLY=true` dans `.env`, les requêtes d'écriture reçoivent une erreur 503.
-- Page « Article introuvable » (404) pour un article inexistant, rendue depuis `withExceptions` dans `bootstrap/app.php` ; les autres 404 gardent la page standard.
-- Tests Pest : `PostPagesTest`, `PostWriteTest`, `PostRelationsTest`, `PostTaxonomyTest` et `PostFeedbackTest`.
+- Comptes écrits à la main : inscription (`/inscription`), connexion (`/connexion`) et déconnexion, avec `Hash::make`, `Auth::attempt` et la régénération de la session.
+- Colonne `role` (`author` par défaut, `admin`). Après `php artisan migrate:fresh --seed`, le compte de démonstration `test@example.com` (mot de passe `password`) est administrateur.
+- Écritures et back-office réservés aux utilisateurs connectés (middleware `auth`) ; chaque nouvel article est attaché à son auteur.
+- Gate `manage-categories` : seuls les administrateurs gèrent les catégories.
+- `PostPolicy` : un auteur modifie et supprime ses articles, un administrateur tous les articles.
+- Tests Pest : `PostPagesTest`, `PostWriteTest`, `PostRelationsTest`, `PostTaxonomyTest`, `PostFeedbackTest`, `CategoryAdminTest`, `ErrorPagesTest`, `AuthTest` et `AuthorizationTest`.
 
 ## Routes disponibles
 
@@ -24,10 +25,13 @@
 | PUT | `/posts/{post}` | `posts.update` | `PostController@update` |
 | DELETE | `/posts/{post}` | `posts.destroy` | `PostController@destroy` |
 | PATCH | `/posts/{post}/publication` | `posts.publication` | `PostController@togglePublication` |
-### Session 10
+| GET | `/inscription` | `register` | `Auth\RegisterController@create` |
+| POST | `/inscription` | `register.store` | `Auth\RegisterController@store` |
+| GET | `/connexion` | `login` | `Auth\LoginController@create` |
+| POST | `/connexion` | `login.store` | `Auth\LoginController@store` |
+| POST | `/deconnexion` | `logout` | `Auth\LoginController@destroy` |
+### Session 11
 
-Back-office des catégories et des tags, messages de validation en français, pages 404 et 503 dans le layout du site.
+![Barre de navigation d'un utilisateur connecté, avec le message « Vous êtes connecté. »](![alt text](image-16.png))
 
-![Formulaire de catégorie envoyé vide, avec les messages de validation en français](![alt text](image-15.png))
-
-![Page 404 du site pour une adresse inconnue](![alt text](image-14.png))
+![Page 403 quand un auteur ouvre la modification de l'article d'un autre auteur](![alt text](image-18.png))
