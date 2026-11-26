@@ -7,26 +7,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTagRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('manage-tags');
     }
 
     /**
+     * Get the validation rules that apply to the request.
+     *
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:tags,name'],
             'slug' => ['required', 'string', 'max:255', 'unique:tags,slug'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'slug.unique' => 'Ce slug est déjà utilisé par un autre tag.',
         ];
     }
 }

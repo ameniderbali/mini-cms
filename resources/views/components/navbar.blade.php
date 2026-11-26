@@ -9,11 +9,12 @@
         @can('manage-categories')
             <x-nav-link to="admin.categories.index" match="admin.categories.*">Catégories</x-nav-link>
         @endcan
+        @can('manage-tags')
+            <x-nav-link to="admin.tags.index" match="admin.tags.*">Tags</x-nav-link>
+        @endcan
 
         <div class="ml-auto flex flex-wrap items-center gap-2">
             @auth
-                <x-nav-link to="my-posts">Mes articles</x-nav-link>
-
                 <span class="text-sm text-gray-600">{{ auth()->user()->name }}</span>
 
                 <form method="POST" action="{{ route('logout') }}">
