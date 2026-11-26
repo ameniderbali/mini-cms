@@ -23,6 +23,18 @@ class PostController extends Controller
         ]);
     }
 
+    public function mine(Request $request): View
+    {
+        return view('posts.index', [
+            'heading' => 'Mes articles',
+            'posts' => $request->user()
+                ->posts()
+                ->with('user', 'category', 'tags')
+                ->latest('id')
+                ->paginate(4),
+        ]);
+    }
+
     public function archive(string $year): View
     {
         return view('posts.index', [

@@ -5,7 +5,7 @@ use App\Models\User;
 
 beforeEach(function () {
     $this->withoutVite();
-    $this->actingAs(User::factory()->create());
+    $this->actingAs(User::factory()->admin()->create());
 });
 
 function tagAdminData(array $overrides = []): array

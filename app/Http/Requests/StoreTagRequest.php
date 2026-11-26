@@ -27,4 +27,16 @@ class StoreTagRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255', 'unique:tags,slug'],
         ];
     }
+
+    /**
+     * Custom validation messages.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'slug.unique' => 'Ce slug est déjà utilisé par un autre tag.',
+        ];
+    }
 }
